@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/starterpages.css" />
+    <!-- ==Fav==Icon========== -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/assets/favicon.ico">
+
+    <title>4UM Login</title>
+  </head>
+  <body>
+    <div class="logo">
+      <h1>Welcome to 4UM!</h1>
+    </div>
+    <div class="form">
+      <img src="/static/assets/logo.png" alt="Amjad we need a logo bruh" class="logoClass"
+      onclick="window.location.replace('/')" />
+      <form id="signupform" autocomplete="off">
+        <input
+          name="Name"
+          placeholder="Username"
+          type="text"
+          id="uname"
+          required
+        />
+        <input
+          name="Email"
+          placeholder="Email"
+          type="text"
+          id="email"
+          required
+        />
+        <input
+          name="Password"
+          placeholder="Password"
+          type="password"
+          id="pass"
+          required
+        />
+        <input
+          name="signUpPassConfirm"
+          placeholder="confirm password"
+          type="password"
+          id="cpass"
+          required
+        />
+        <button
+          type="button"
+          class="Signupbtn"
+          id="submit"
+          onclick="toSignUp()"
+        >
+          <span>SignUp</span>
+        </button>
+        <a class="entrypagehref" href="/login">Or login Instead</a>
+      </form>
+    </div>
+    <script src="/static/js/signup.js"></script>
+  </body>
+</html>

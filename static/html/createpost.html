@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/createpost.css" />
+    <!-- ==Fav==Icon========== -->
+    <link rel="shortcut icon" type="image/x-icon" href="../static/assets/favicon.ico">
+
+    <title>Post Creation</title>
+  </head>
+
+  <body>
+    <div class="fixed-01"></div>
+    <!--Container for post creation form-->
+    <div class="container" id="FormContainer">
+      <div class="err" id="errdiv"></div>
+      <form>
+        <div class="row">
+          <div class="col-25">
+            <label for="fname">Post Title</label>
+          </div>
+          <div class="col-75">
+            <input
+              type="text"
+              id="Ptitle"
+              name="PostTitle"
+              placeholder="Post Title.."
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="lname">Categories</label>
+          </div>
+          <div class="col-75" id="catHandler"></div>
+        </div>
+        <div class="row">
+          <div class="col-25">
+            <label for="subject">Post Content</label>
+          </div>
+          <div class="col-75">
+            <textarea
+              id="Pcontent"
+              name="PostContent"
+              placeholder="Write something lol.."
+              style="height: 100px"
+            ></textarea>
+          </div>
+        </div>
+        <div class="rowl">
+          <button id="postBtn" class="postBtn">Create Post</button>
+        </div>
+      </form>
+    </div>
+    <script src="../static/js/createpost.js" type="module"></script>
+  </body>
+</html>

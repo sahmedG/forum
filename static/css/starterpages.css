@@ -1,0 +1,169 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200&family=Noto+Sans&display=swap");
+
+body,
+html {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: #0C0F0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form,
+.logo {
+  width: 40vw;
+  height: 100vh;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.logo h1 {
+  background: linear-gradient(to right, #FF206E, #FBFF12);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "IBM Plex Mono", monospace, sans-serif;
+  font-weight: 200;
+}
+
+.logo img {
+  filter: invert(100%);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+input[type="text"],
+input[type="password"] {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 0.5px solid grey;
+  padding-bottom: 0.2em;
+  font-size: large;
+  color: white;
+  font-family: "Noto Sans", sans-serif;
+  transition-duration: 0.5s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: transparent;
+  border-bottom: 0.8px solid #FBFF12;
+  padding-bottom: 0.5em;
+  outline: 0;
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  font-size: large;
+  font-weight: 200;
+  font-family: "IBM Plex Mono", sans-serif;
+}
+
+button {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #FBFF12;
+  border: none;
+  color: #0C0F0A;
+  text-align: center;
+  font-size: 17px;
+  font-family: "IBM Plex Mono", sans-serif;
+  font-weight: 700;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+button span:after {
+  content: "»";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+}
+
+button:hover {
+  background-color: #FF206E;
+}
+
+button:hover span {
+  padding-right: 15px;
+}
+
+button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+.entrypagehref {
+  all: unset;
+  cursor: pointer;
+  color: cyan;
+  font-family: 'IBM Plex Mono', monospace, sans-serif;
+  font-weight: 700;
+  transition-duration: 0.4s;
+}
+
+.entrypagehref:hover {
+  color: #FF206E;
+}
+
+.signuperr {
+  font-family: 'IBM Plex Mono', monospace, sans-serif;
+  font-size: 1.5rem;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  color: rgb(255, 0, 0);
+}
+
+.logoClass {
+  filter: invert(100%);
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  margin-bottom: 50px;
+}
