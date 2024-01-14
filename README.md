@@ -135,10 +135,9 @@ go run . cmd/main.go
     - bcrypt
     - UUID
 
-
-## Authors
-- emahfood 
-- amali 
-- malsamma
-- sahmed
-- akhaled
+## Contributers
+- [sahmedG](https://github.com/sahmedG) (Sameer Goumaa)
+- [MSK17A](https://github.com/MSK17A) (Mohammed Alsammak)
+- [Emahfoodh](https://github.com/Emahfoodh) (Eman)
+- [amali01](https://github.com/amali01) (Amjad Ali)
+- [akhaled01](https://github.com/akhaled01) (Abdulrahman Idrees) 
