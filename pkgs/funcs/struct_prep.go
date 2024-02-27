@@ -12,4 +12,5 @@ type Post_json struct {
 	PostDisLikes  int      `json:"post_dislikes"`
 	Post_ID       string   `json:"post_id"`
 	IsLiked       int      `json:"isLiked"`
+	ImageData     []byte   `json:"image_data,omitempty"`
 }

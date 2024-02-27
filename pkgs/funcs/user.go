@@ -7,18 +7,20 @@ import (
 	"github.com/mattn/go-sqlite3"
 )
 
-func AddUser(userName string, userEmail string, pwd string) error {
+func AddUser(userName string, userEmail string, pwd string, EX_ID string) error {
 	userTypeID, err := UserTypeID("user")
 	if err != nil {
 		return err
 	}
 	//    query := "INSERT INTO users (user_email, user_pwd, user_type) VALUES (?, ?, ?)"
 
-	query := "INSERT INTO users (user_email, user_pwd, user_type) VALUES (?, ?, ?)"
-	if _, err := DB.Exec(query, userEmail, pwd, userTypeID); err != nil {
-
+	query := "INSERT INTO users (user_email, user_pwd, user_type, EX_ID) VALUES (?, ?, ?, ?)"
+	if _, err := DB.Exec(query, userEmail, pwd, userTypeID, EX_ID); err != nil {
 		sqliteErr, ok := err.(sqlite3.Error)
 		if ok && sqliteErr.ExtendedCode == sqlite3.ErrConstraintUnique {
+			if EX_ID != "" {
+				
+			}
 			return fmt.Errorf("user already exist")
 		}
 		return err
@@ -32,7 +34,7 @@ func AddUser(userName string, userEmail string, pwd string) error {
 }
 
 func CreateUserProfile(userName string, userEmail string) error {
-	userID, err := SelectUserID(userEmail)
+	userID, err := SelectUserID(userEmail,"")
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -59,7 +61,7 @@ func UserTypeID(userType string) (int, error) {
 }
 
 // Retrive userID from database
-func SelectUserID(userEmail string) (int, error) {
+func SelectUserID(userEmail,EX_ID string) (int, error) {
 	query := "SELECT u_id FROM users WHERE user_email = ?"
 	row := DB.QueryRow(query, userEmail)
 
@@ -122,7 +124,7 @@ func GetUserHash(userID int) string {
 func GetUserPosts(userID int, onlyLiked bool) ([]int, error) {
 	query := "SELECT p_id FROM posts WHERE user_id = ?"
 	if onlyLiked {
-		query="SELECT post_id FROM posts_interaction WHERE user_id = ? AND actions_type = 1"
+		query = "SELECT post_id FROM posts_interaction WHERE user_id = ? AND actions_type = 1"
 	}
 	// Query the database
 	rows, err := DB.Query(query, userID)

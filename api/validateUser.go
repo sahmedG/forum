@@ -44,8 +44,8 @@ func ValidateUser(w http.ResponseWriter, r *http.Request) (*Session, bool) {
 func UserHasSession(userID int) (string, bool) {
 	for tokin, session := range Sessions {
 		if session.userID == userID {
-			return tokin,true
+			return tokin, true
 		}
 	}
-	return "",false
+	return "", false
 }

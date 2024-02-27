@@ -13,12 +13,11 @@ import (
 	"forum/pkgs/funcs"
 	"forum/pkgs/hashing"
 )
-
 type Successful_Login struct {
 	User_id int  `json:"user_id"`
 	Success bool `json:"success"`
 }
-
+var UserSession Session
 func LogIn(w http.ResponseWriter, r *http.Request) {
 	// Get method, serve the page
 	if r.Method == http.MethodGet {
@@ -42,6 +41,7 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+
 		var data LogIn_form
 
 		// Unmarshal the JSON data from the request body
@@ -57,6 +57,7 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 				User_id: -1,
 				Success: false,
 			}
+
 			w.WriteHeader(http.StatusUnauthorized)
 
 			w.Header().Set("Content-Type", "application/json")
@@ -64,15 +65,16 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		fmt.Println(data)
 		// get user id
-		get_user_id, err := funcs.SelectUserID(data.Email)
+
+		get_user_id, err := funcs.SelectUserID(data.Email, data.EX_ID)
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			successfulLogin := Successful_Login{
 				User_id: -1,
 				Success: false,
 			}
+
 			w.WriteHeader(http.StatusUnauthorized)
 			w.Header().Set("Content-Type", "application/json")
 			json.NewEncoder(w).Encode(successfulLogin)
@@ -121,31 +123,30 @@ func LogIn(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Associate the UUID with the user in your session or database
-		userSession := Session{
+		UserSession = Session{
 			userID:      get_user_id,
 			SessionUUID: userUUID.String(),
 			expiry:      time.Now().Add(3600 * time.Second),
 		}
-		Sessions[userSession.SessionUUID] = userSession
+		Sessions[UserSession.SessionUUID] = UserSession
 
 		// Set a cookie with a session token that can be used to authenticate access without logging in
 		http.SetCookie(w, &http.Cookie{
 			Name:    "session_token",
-			Value:   userSession.SessionUUID,
-			Expires: userSession.expiry,
+			Value:   UserSession.SessionUUID,
+			Expires: UserSession.expiry,
 		})
 
-		fmt.Printf("UUID: %s\n", userSession.SessionUUID)
+		fmt.Printf("UUID: %s\n", UserSession.SessionUUID)
 		// send welcome data
 		successfulLogin := Successful_Login{
-			User_id: userSession.userID,
+			User_id: UserSession.userID,
 			Success: true,
 		}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(successfulLogin)
-
 		// A go routine to indicate that the session is expired
-		go EXPIRED(userSession)
+		go EXPIRED(UserSession)
 	} else {
 		// Handle other HTTP methods or incorrect requests
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)

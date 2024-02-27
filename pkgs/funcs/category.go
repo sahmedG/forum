@@ -13,6 +13,7 @@ func GetCategoryID(category string) (int, error) {
 	if err := row.Scan(&catID); err != nil {
 		return 0, err
 	}
+	fmt.Println(catID)
 	return catID, nil
 }
 

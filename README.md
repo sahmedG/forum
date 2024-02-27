@@ -27,7 +27,7 @@ Let's dive in and explore the exciting world of forums, where users connect, sha
 ## Getting Started
 You can run the Lem-In project with the following command:
 ```console
-git clone https://learn.reboot01.com/git/malsamma/forum
+git clone https://learn.reboot01.com/git/amali/forum-image-upload
 cd forum
 ```
 
@@ -37,7 +37,7 @@ _make sure you are in project directory_
 ```
 go run . cmd/main.go
 ```
-1. Open http://localhost:8080/ in a browser .
+1. Open https://localhost:8080/ in a browser .
 2. start going thro the website as a Guest or sign up to continue as user .
 
 ### Directory Structure
@@ -135,9 +135,10 @@ go run . cmd/main.go
     - bcrypt
     - UUID
 
-## Contributers
-- [sahmedG](https://github.com/sahmedG) (Sameer Goumaa)
-- [MSK17A](https://github.com/MSK17A) (Mohammed Alsammak)
-- [Emahfoodh](https://github.com/Emahfoodh) (Eman)
-- [amali01](https://github.com/amali01) (Amjad Ali)
-- [akhaled01](https://github.com/akhaled01) (Abdulrahman Idrees) 
+
+## Authors
+- emahfood 
+- amali 
+- malsamma
+- sahmed
+- akhaled

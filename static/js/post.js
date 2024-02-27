@@ -8,6 +8,8 @@ let gotten_post;
 let gotten_comm = [];
 
 const postwrapper = document.getElementById("mPostWrapper");
+const imageViewingArea = document.getElementById("imageViewingArea"); // New image viewing area
+
 const postID = parseInt(
   location.href.match(/post\/[0-9]+/)[0].replace("post/", ""),
 );
@@ -27,6 +29,13 @@ const readyPost = async () => {
   gotten_post = postData;
   // console.log(gotten_post)
 
+  //  // Display image in the image viewing area if the image value is true
+  //  if (gotten_post.image_data) {
+  //   const imageElement = document.createElement("img");
+  //   imageElement.src = `data:image/jpeg;base64,${gotten_post.image_data}`;
+  //   imageViewingArea.appendChild(imageElement);
+  // }
+  
   gotten_comm = await orgPostHTML(postwrapper, postData);
   // .then(()=>{})
   /********* Add click listeners for post ***************/

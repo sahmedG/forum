@@ -11,8 +11,8 @@ import (
 
 type Post_Comment struct {
 	Post_id     int
-	start_index int
-	end_index   int
+	Start_index int
+	End_index   int
 }
 
 type Comments_Container struct {

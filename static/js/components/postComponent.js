@@ -65,6 +65,7 @@ export const orgPostHTML = async (wrapper, prop) => {
       ${cats}
     </div>
     <hr>
+    <div class="image-viewing-area" id="imageViewingArea"></div> 
     <div class="postcontent">
       ${prop.text}
     </div>
@@ -77,6 +78,12 @@ export const orgPostHTML = async (wrapper, prop) => {
         ${comments}
       </div>
     </div>`;
+  // Display image in the image viewing area if the image value is true
+  if (prop.image_data) {
+    const imageElement = document.createElement("img");
+    imageElement.src = `data:image/jpeg;base64,${prop.image_data}`;
+    imageViewingArea.appendChild(imageElement);
+  }
 
   return gotten_comm;
 };

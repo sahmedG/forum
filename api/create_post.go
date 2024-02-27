@@ -1,7 +1,7 @@
 package api
 
 import (
-	"encoding/json"
+	"encoding/base64"
 	"errors"
 	"fmt"
 	"io"
@@ -12,9 +12,10 @@ import (
 )
 
 type Post struct {
-	Post       string
-	Title      string
-	Categories []string
+	Post       string   `json:"Post"`
+	Title      string   `json:"Title"`
+	ImageFile  string   `json:"ImageFileBase64"`
+	Categories []string `json:"Categories"`
 }
 
 func Create_Post(w http.ResponseWriter, r *http.Request) {
@@ -23,28 +24,48 @@ func Create_Post(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
+
 	userSession, valid := ValidateUser(w, r)
 
 	if !valid {
 		w.Write([]byte("Unauthorize access"))
 		return
 	}
+
 	// Read the request body
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "Failed to read request body", http.StatusInternalServerError)
-		return
-	}
+	// body, err := io.ReadAll(r.Body)
+	// if err != nil {
+	// 	http.Error(w, "Failed to read request body", http.StatusInternalServerError)
+	// 	return
+	// }
 
 	var data Post
 
 	// Unmarshal the JSON data from the request body into 'data' variable of type Post
-	if err := json.Unmarshal(body, &data); err != nil {
-		http.Error(w, "Failed to unmarshal JSON", http.StatusBadRequest)
+	// if err := json.Unmarshal(body, &data); err != nil {
+	// 	fmt.Println("here1")
+	// 	http.Error(w, "Failed to unmarshal JSON", http.StatusBadRequest)
+	// 	return
+	// }
+
+	data.Post = r.FormValue("Post")
+	data.Title = r.FormValue("Title")
+
+	data.Categories = strings.Split(r.FormValue("Categories"),",") // Assuming Categories is an array
+	// Access the image file
+
+	file, imageFileHeader, err := r.FormFile("ImageFile")
+	if err != nil && err != http.ErrMissingFile {
+		http.Error(w, "Failed to get form file", http.StatusBadRequest)
 		return
 	}
+	defer func() {
+		if file != nil {
+			file.Close()
+		}
+	}()
 
-	// Remove leading and trailing white spaces from the title,post content and checks if it is empty and within the limits
+	// Remove leading and trailing white spaces from the title, post content and checks if it is empty and within the limits
 	if err := CheckPostData(data); err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, err.Error())
@@ -56,10 +77,24 @@ func Create_Post(w http.ResponseWriter, r *http.Request) {
 		data.Categories = []string{"General"}
 	}
 
-	err = funcs.CreatePost(userSession.Get_UserID(), data.Title, data.Categories, data.Post)
+
+	err = funcs.CreatePost(userSession.Get_UserID(), data.Title, data.Categories, data.Post, imageFileHeader)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("%s", err), http.StatusBadRequest)
 		return
+	}
+
+	// Process the image file if present
+	if data.ImageFile != "" {
+		// Decode the base64 image data and save it as needed
+		decodedImage, err := base64.StdEncoding.DecodeString(data.ImageFile)
+		if err != nil {
+			http.Error(w, "Failed to decode base64 image data", http.StatusInternalServerError)
+			return
+		}
+		fmt.Println(decodedImage)
+		// Now you can use the 'decodedImage' as needed (e.g., save it to a file)
+		// Example: ioutil.WriteFile("image.jpg", decodedImage, 0644)
 	}
 
 	fmt.Println("POST CREATED SUCCESS")
